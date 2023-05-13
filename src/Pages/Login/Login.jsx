@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../Provider/AuthProvider';
 
 const Login = () => {
-    const {signIn, logOut} = useContext(AuthContext);
+    const {signIn} = useContext(AuthContext);
 
     const handleLogin =(event)=>{
         event.preventDefault()
@@ -20,12 +20,6 @@ const Login = () => {
             console.log(user)
 
         })
-        .catch(error => console.log(error))
-
-        
-        
-        logOut()
-        .then(()=>{})
         .catch(error => console.log(error))
 
     }
