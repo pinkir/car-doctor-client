@@ -1,6 +1,9 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../../Provider/AuthProvider";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 
 
 const CheckOut = () => {
@@ -10,6 +13,12 @@ const CheckOut = () => {
 
     const { user } = useContext(AuthContext);
 
+    // const [selectedDate, setSelectedDate] = useState(null);
+    const [startDate, setStartDate] = useState(new Date());
+
+
+
+
     const handleCheckOut = event => {
         event.preventDefault();
 
@@ -17,7 +26,7 @@ const CheckOut = () => {
         const name = form.name.value;
         const date = form.date.value;
         const email = user?.email;
-        const checkOuts ={
+        const checkOuts = {
             customerName: name,
             img,
             date,
@@ -37,13 +46,13 @@ const CheckOut = () => {
             },
             body: JSON.stringify(checkOuts)
         })
-        .then(res => res.json())
-        .then(data =>{
-            console.log(data);
-            if(data.insertedId){
-                alert('service added')
-            }
-        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.insertedId) {
+                    alert('service added')
+                }
+            })
     }
     return (
 
@@ -59,20 +68,34 @@ const CheckOut = () => {
                         </label>
                         <input type="text" name="name" className="input input-bordered" />
                     </div>
-                    <div className="form-control">
+                    {/* <div className="form-control">
                         <label className="label">
                             <span className="label-text">Date</span>
                         </label>
                         <input type="date" name="date" className="input input-bordered" />
 
+                    </div> */}
+                    {/* <div>
+                        <DayPicker
+                            selected={selectedDate}
+                            onDayClick={day => setSelectedDate(day)}
+                        />
+                    </div> */}
+                    <div>
+                        <h3>Pick a Date when you want our service.</h3>
+                        <DatePicker
+                        className="mt-5 border-4"
+                        name="date" 
+                        selected={startDate} 
+                        onChange={(date) => setStartDate(date)} />
                     </div>
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">Email</span>
                         </label>
-                        <input type="text" 
-                        defaultValue={user?.email}
-                        placeholder="email" className="input input-bordered" />
+                        <input type="text"
+                            defaultValue={user?.email}
+                            placeholder="email" className="input input-bordered" />
                     </div>
                     <div className="form-control">
                         <label className="label">
